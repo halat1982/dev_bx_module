@@ -3,7 +3,7 @@ namespace Ittower\Develop;
 use Bitrix\Main\Loader;
 class Events
 {
-    public function register()
+    public static function register()
     {
         if (!Loader::includeModule('ittower.develop'))
         {

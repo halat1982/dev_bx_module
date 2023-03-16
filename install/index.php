@@ -177,7 +177,7 @@ Class ittower_develop extends CModule
     function DoUninstall()
     {
         if(\ITtower\Develop\Config::getOption(self::AUTH) === "Y"){
-            if($_SERVER["REMOTE_USER"] != ""){
+            if($_SERVER["REMOTE_USER"] != "" || $_SERVER["PHP_AUTH_USER"]){
                 $this->uninstallAction();
             } else {
                 header('WWW-Authenticate: Basic realm="'.$this->MODULE_ID.'"');

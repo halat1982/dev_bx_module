@@ -5,7 +5,8 @@ class Auth
 {
     const MODULE_SIGNATURE = "IT_TOWER_DEVELOP";
 
-    const AUTH_STRING = '<FilesMatch "(dump_list|fileman_admin).php$">
+    const AUTH_STRING = 'CGIPassAuth On
+<FilesMatch "(dump_list|fileman_admin).php$">
     AuthType Basic
     AuthName "Authorization"
     AuthUserFile #ROOT_SERVER_PATH#/.htpasswd
@@ -27,7 +28,7 @@ class Auth
         return $login.":".self::crypt_apr1_md5($password);
     }
 
-    protected function crypt_apr1_md5($password)
+    public static function crypt_apr1_md5($password)
     {
         $salt = substr(str_shuffle('abcdefghijklmnopqrstuvwxyz0123456789'), 0, 8);
         $len = strlen($password);
@@ -37,7 +38,7 @@ class Auth
             $text .= substr($bin, 0, min(16, $i));
         }
         for($i = $len; $i > 0; $i >>= 1) {
-            $text .= ($i & 1) ? chr(0) : $password{0};
+            $text .= ($i & 1) ? chr(0) : $password[0];
         }
         $bin = pack('H32', md5($text));
         for($i = 0; $i < 1000; $i++) {
